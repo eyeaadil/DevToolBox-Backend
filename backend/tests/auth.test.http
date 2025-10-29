@@ -1,0 +1,148 @@
+### DevToolBox API - Authentication Tests
+### Use REST Client extension in VS Code or similar tools
+
+@baseUrl = http://localhost:5000/api/v1
+@contentType = application/json
+
+### Variables (will be set after requests)
+# @accessToken = your-access-token
+# @refreshToken = your-refresh-token
+
+###
+### 1. Health Check
+GET http://localhost:5000/health
+
+###
+### 2. Register New User
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "name": "Test User"
+}
+
+###
+### 3. Register Another User (for testing)
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "john@example.com",
+  "password": "john123",
+  "name": "John Doe"
+}
+
+###
+### 4. Login
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+###
+### 5. Get Current User (Protected Route)
+### Replace YOUR_ACCESS_TOKEN with actual token from login response
+GET {{baseUrl}}/auth/me
+Authorization: Bearer YOUR_ACCESS_TOKEN
+
+###
+### 6. Update Profile (Protected Route)
+PUT {{baseUrl}}/auth/profile
+Content-Type: {{contentType}}
+Authorization: Bearer YOUR_ACCESS_TOKEN
+
+{
+  "name": "Updated Test User",
+  "avatar": "https://example.com/avatar.jpg"
+}
+
+###
+### 7. Change Password (Protected Route)
+PUT {{baseUrl}}/auth/change-password
+Content-Type: {{contentType}}
+Authorization: Bearer YOUR_ACCESS_TOKEN
+
+{
+  "currentPassword": "password123",
+  "newPassword": "newpassword123"
+}
+
+###
+### 8. Refresh Access Token
+POST {{baseUrl}}/auth/refresh
+Content-Type: {{contentType}}
+
+{
+  "refreshToken": "YOUR_REFRESH_TOKEN"
+}
+
+###
+### 9. Logout (Protected Route)
+POST {{baseUrl}}/auth/logout
+Content-Type: {{contentType}}
+Authorization: Bearer YOUR_ACCESS_TOKEN
+
+{
+  "refreshToken": "YOUR_REFRESH_TOKEN"
+}
+
+###
+### 10. Logout from All Devices (Protected Route)
+POST {{baseUrl}}/auth/logout-all
+Content-Type: {{contentType}}
+Authorization: Bearer YOUR_ACCESS_TOKEN
+
+###
+### Error Cases
+###
+
+### 11. Register with Existing Email (Should Fail)
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "name": "Duplicate User"
+}
+
+###
+### 12. Login with Wrong Password (Should Fail)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "test@example.com",
+  "password": "wrongpassword"
+}
+
+###
+### 13. Access Protected Route Without Token (Should Fail)
+GET {{baseUrl}}/auth/me
+
+###
+### 14. Register with Invalid Email (Should Fail)
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "invalid-email",
+  "password": "password123",
+  "name": "Invalid User"
+}
+
+###
+### 15. Register with Short Password (Should Fail)
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "short@example.com",
+  "password": "123",
+  "name": "Short Password User"
+}

@@ -1,0 +1,61 @@
+{
+  "name": "devtoolbox-backend",
+  "version": "1.0.0",
+  "description": "Backend API for DevToolBox - A modern developer productivity platform",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "eslint src/**/*.js --fix"
+  },
+  "keywords": [
+    "developer-tools",
+    "api-tester",
+    "code-formatter",
+    "regex-tester"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "express-mongo-sanitize": "^2.2.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "joi": "^17.11.0",
+    "winston": "^3.11.0",
+    "morgan": "^1.10.0",
+    "redis": "^4.6.12",
+    "socket.io": "^4.6.0",
+    "axios": "^1.6.5",
+    "uuid": "^9.0.1",
+    "prettier": "^3.1.1",
+    "js-beautify": "^1.14.11",
+    "json-diff": "^1.0.6",
+    "cron-parser": "^4.9.0",
+    "swagger-parser": "^10.0.3",
+    "curlconverter": "^4.9.0",
+    "marked": "^11.1.1",
+    "compression": "^1.7.4",
+    "express-validator": "^7.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "eslint": "^8.56.0",
+    "@types/jest": "^29.5.11"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
