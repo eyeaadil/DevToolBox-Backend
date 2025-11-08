@@ -72,9 +72,17 @@ app.get(`/api/${config.apiVersion}`, (req, res) => {
 
 // Import routes
 import authRoutes from './routes/auth.routes.js';
+import collectionRoutes from './routes/collection.routes.js';
+import requestRoutes from './routes/request.routes.js';
+import environmentRoutes from './routes/environment.routes.js';
+import historyRoutes from './routes/history.routes.js';
 
 // Mount routes
 app.use(`/api/${config.apiVersion}/auth`, authRoutes);
+app.use(`/api/${config.apiVersion}/collections`, collectionRoutes);
+app.use(`/api/${config.apiVersion}/requests`, requestRoutes);
+app.use(`/api/${config.apiVersion}/environments`, environmentRoutes);
+app.use(`/api/${config.apiVersion}/history`, historyRoutes);
 
 // 404 handler
 app.use(notFound);

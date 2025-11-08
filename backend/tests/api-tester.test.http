@@ -1,0 +1,299 @@
+### DevToolBox API - API Tester Feature Tests
+### Make sure to login first and replace YOUR_ACCESS_TOKEN
+
+@baseUrl = http://localhost:5000/api/v1
+@accessToken = YOUR_ACCESS_TOKEN
+@contentType = application/json
+
+###
+### COLLECTIONS
+###
+
+### 1. Create Collection
+POST {{baseUrl}}/collections
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "name": "My API Collection",
+  "description": "Collection for testing APIs",
+  "color": "#3B82F6",
+  "icon": "folder"
+}
+
+### 2. Get All Collections
+GET {{baseUrl}}/collections
+Authorization: Bearer {{accessToken}}
+
+### 3. Get All Collections with Search
+GET {{baseUrl}}/collections?search=API&page=1&limit=10
+Authorization: Bearer {{accessToken}}
+
+### 4. Get Single Collection (replace COLLECTION_ID)
+GET {{baseUrl}}/collections/COLLECTION_ID
+Authorization: Bearer {{accessToken}}
+
+### 5. Update Collection
+PUT {{baseUrl}}/collections/COLLECTION_ID
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Updated Collection Name",
+  "description": "Updated description",
+  "color": "#10B981"
+}
+
+### 6. Duplicate Collection
+POST {{baseUrl}}/collections/COLLECTION_ID/duplicate
+Authorization: Bearer {{accessToken}}
+
+### 7. Delete Collection
+DELETE {{baseUrl}}/collections/COLLECTION_ID
+Authorization: Bearer {{accessToken}}
+
+###
+### REQUESTS
+###
+
+### 8. Create Request
+POST {{baseUrl}}/requests
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "collectionId": "COLLECTION_ID",
+  "name": "Get Users",
+  "method": "GET",
+  "url": "https://jsonplaceholder.typicode.com/users",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryParams": {},
+  "bodyType": "none",
+  "description": "Fetch all users from JSONPlaceholder"
+}
+
+### 9. Create POST Request
+POST {{baseUrl}}/requests
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "collectionId": "COLLECTION_ID",
+  "name": "Create Post",
+  "method": "POST",
+  "url": "https://jsonplaceholder.typicode.com/posts",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "title": "Test Post",
+    "body": "This is a test post",
+    "userId": 1
+  },
+  "bodyType": "json",
+  "description": "Create a new post"
+}
+
+### 10. Get Requests by Collection
+GET {{baseUrl}}/requests/collection/COLLECTION_ID
+Authorization: Bearer {{accessToken}}
+
+### 11. Get Single Request
+GET {{baseUrl}}/requests/REQUEST_ID
+Authorization: Bearer {{accessToken}}
+
+### 12. Update Request
+PUT {{baseUrl}}/requests/REQUEST_ID
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Updated Request Name",
+  "url": "https://jsonplaceholder.typicode.com/users/1"
+}
+
+### 13. Execute Request (Proxy) - GET
+POST {{baseUrl}}/requests/execute
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "method": "GET",
+  "url": "https://jsonplaceholder.typicode.com/users/1",
+  "headers": {
+    "Content-Type": "application/json"
+  }
+}
+
+### 14. Execute Request (Proxy) - POST
+POST {{baseUrl}}/requests/execute
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "method": "POST",
+  "url": "https://jsonplaceholder.typicode.com/posts",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "title": "My Test Post",
+    "body": "This is the content",
+    "userId": 1
+  }
+}
+
+### 15. Duplicate Request
+POST {{baseUrl}}/requests/REQUEST_ID/duplicate
+Authorization: Bearer {{accessToken}}
+
+### 16. Delete Request
+DELETE {{baseUrl}}/requests/REQUEST_ID
+Authorization: Bearer {{accessToken}}
+
+###
+### ENVIRONMENTS
+###
+
+### 17. Create Environment
+POST {{baseUrl}}/environments
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Development",
+  "variables": {
+    "baseUrl": "https://api.dev.example.com",
+    "apiKey": "dev-api-key-123",
+    "timeout": "5000"
+  },
+  "isActive": true
+}
+
+### 18. Create Production Environment
+POST {{baseUrl}}/environments
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Production",
+  "variables": {
+    "baseUrl": "https://api.example.com",
+    "apiKey": "prod-api-key-456",
+    "timeout": "10000"
+  },
+  "isActive": false
+}
+
+### 19. Get All Environments
+GET {{baseUrl}}/environments
+Authorization: Bearer {{accessToken}}
+
+### 20. Get Active Environment
+GET {{baseUrl}}/environments/active
+Authorization: Bearer {{accessToken}}
+
+### 21. Get Single Environment
+GET {{baseUrl}}/environments/ENVIRONMENT_ID
+Authorization: Bearer {{accessToken}}
+
+### 22. Update Environment
+PUT {{baseUrl}}/environments/ENVIRONMENT_ID
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "variables": {
+    "baseUrl": "https://api.dev.example.com",
+    "apiKey": "updated-dev-key",
+    "timeout": "8000",
+    "newVar": "newValue"
+  }
+}
+
+### 23. Activate Environment
+PUT {{baseUrl}}/environments/ENVIRONMENT_ID/activate
+Authorization: Bearer {{accessToken}}
+
+### 24. Delete Environment
+DELETE {{baseUrl}}/environments/ENVIRONMENT_ID
+Authorization: Bearer {{accessToken}}
+
+###
+### HISTORY
+###
+
+### 25. Get History
+GET {{baseUrl}}/history
+Authorization: Bearer {{accessToken}}
+
+### 26. Get History with Filters
+GET {{baseUrl}}/history?method=GET&search=users&page=1&limit=10
+Authorization: Bearer {{accessToken}}
+
+### 27. Get History Statistics
+GET {{baseUrl}}/history/stats
+Authorization: Bearer {{accessToken}}
+
+### 28. Get Single History Entry
+GET {{baseUrl}}/history/HISTORY_ID
+Authorization: Bearer {{accessToken}}
+
+### 29. Delete History Entry
+DELETE {{baseUrl}}/history/HISTORY_ID
+Authorization: Bearer {{accessToken}}
+
+### 30. Clear All History
+DELETE {{baseUrl}}/history
+Authorization: Bearer {{accessToken}}
+
+###
+### COMPLETE WORKFLOW TEST
+###
+
+### Step 1: Create a collection
+POST {{baseUrl}}/collections
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "name": "JSONPlaceholder Tests",
+  "description": "Testing with JSONPlaceholder API",
+  "color": "#F59E0B"
+}
+
+### Step 2: Create a GET request in the collection
+# (Use collection ID from Step 1)
+POST {{baseUrl}}/requests
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "collectionId": "COLLECTION_ID_FROM_STEP_1",
+  "name": "Get All Posts",
+  "method": "GET",
+  "url": "https://jsonplaceholder.typicode.com/posts",
+  "headers": {
+    "Accept": "application/json"
+  }
+}
+
+### Step 3: Execute the request
+POST {{baseUrl}}/requests/execute
+Authorization: Bearer {{accessToken}}
+Content-Type: {{contentType}}
+
+{
+  "method": "GET",
+  "url": "https://jsonplaceholder.typicode.com/posts",
+  "headers": {
+    "Accept": "application/json"
+  },
+  "requestId": "REQUEST_ID_FROM_STEP_2"
+}
+
+### Step 4: Check history
+GET {{baseUrl}}/history?page=1&limit=5
+Authorization: Bearer {{accessToken}}
